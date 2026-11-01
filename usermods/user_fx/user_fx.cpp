@@ -2,26 +2,8 @@
 
 // for information how FX metadata strings work see https://kno.wled.ge/interfaces/json-api/#effect-metadata
 
-#if !(defined(WLED_DISABLE_PARTICLESYSTEM2D) && defined(WLED_DISABLE_PARTICLESYSTEM1D))
-  #include "FXparticleSystem.h" // include particle system code only if at least one system is enabled
-  #ifdef WLED_DISABLE_PARTICLESYSTEM2D
-    #define WLED_PS_DONT_REPLACE_2D_FX
-  #endif
-  #ifdef WLED_DISABLE_PARTICLESYSTEM1D
-    #define WLED_PS_DONT_REPLACE_1D_FX
-  #endif
-  #ifdef ESP8266
-    #if !defined(WLED_DISABLE_PARTICLESYSTEM2D) && !defined(WLED_DISABLE_PARTICLESYSTEM1D)
-      #error ESP8266 does not support 1D and 2D particle systems simultaneously. Please disable one of them.
-    #endif
-  #endif
-#else
-  #define WLED_PS_DONT_REPLACE_1D_FX
-  #define WLED_PS_DONT_REPLACE_2D_FX
-#endif
-#ifdef WLED_PS_DONT_REPLACE_FX
-  #define WLED_PS_DONT_REPLACE_1D_FX
-  #define WLED_PS_DONT_REPLACE_2D_FX
+#ifndef WLED_DISABLE_PARTICLESYSTEM1D
+  #include "FXparticleSystem.h"  // PS Pendulum requires the 1D particle system
 #endif
 
 // paletteBlend: 0 - wrap when moving, 1 - always wrap, 2 - never wrap, 3 - none (undefined)
